@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Growing Game</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            text-align: center;
+            color: #333;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        h1 {
+            color: #4caf50;
+            margin-top: 20px;
+        }
+
+        #gameContainer {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            background-color: #e7f5f5;
+        }
+
+        #score {
+            font-size: 24px;
+            color: #333;
+            margin-top: 20px;
+        }
+
+        .btn {
+            background-color: #4caf50;
+            color: white;
+            font-size: 18px;
+            padding: 15px 30px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .plant {
+            width: 150px;
+            height: 150px;
+            margin-top: 30px;
+            background-color: #8BC34A;
+            border-radius: 50%;
+            position: relative;
+            transition: all 1s ease-in-out;
+        }
+
+        .small-plant {
+            width: 100px;
+            height: 100px;
+        }
+
+        .medium-plant {
+            width: 120px;
+            height: 120px;
+        }
+
+        .large-plant {
+            width: 150px;
+            height: 150px;
+            background-color: #4CAF50;
+        }
+
+        .flowering-plant {
+            background-color: #FF5722;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+        }
+
+        .plant p {
+            position: absolute;
+            bottom: -10px;
+            left: 10px;
+            font-size: 14px;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <h1>Grow Your Plant!</h1>
+        <div class="plant small-plant" id="plant">
+            <p id="stage">Seed</p>
+        </div>
+        <button class="btn" id="growButton">Grow Plant</button>
+        <p id="score">Points: 0</p>
+    </div>
+
+    <script>
+        let score = 0;
+        let plantStage = 0; // 0: Seed, 1: Sprout, 2: Small, 3: Medium, 4: Large, 5: Flowering
+        const plantElement = document.getElementById("plant");
+        const scoreElement = document.getElementById("score");
+        const growButton = document.getElementById("growButton");
+        const stageElement = document.getElementById("stage");
+
+        function updatePlant() {
+            if (plantStage === 1) {
+                plantElement.className = "plant medium-plant";
+                stageElement.textContent = "Sprout";
+            } else if (plantStage === 2) {
+                plantElement.className = "plant medium-plant";
+                stageElement.textContent = "Small Plant";
+            } else if (plantStage === 3) {
+                plantElement.className = "plant large-plant";
+                stageElement.textContent = "Medium Plant";
+            } else if (plantStage === 4) {
+                plantElement.className = "plant flowering-plant";
+                stageElement.textContent = "Large Plant";
+            } else if (plantStage === 5) {
+                plantElement.className = "plant flowering-plant";
+                stageElement.textContent = "Flowering!";
+            }
+        }
+
+        function growPlant() {
+            if (plantStage < 5) {
+plantStage++;
+                score++;
+                updatePlant();
+                scoreElement.textContent = "Points: " + score;
+            } else {
+                alert("Your plant has fully grown! Start over.");
+                resetGame();
+            }
+        }
+
+        function resetGame() {
+            plantStage = 0;
+            score = 0;
+            updatePlant();
+            scoreElement.textContent = "Points: 0";
+        }
+
+        growButton.addEventListener("click", growPlant);
+    </script>
+</body>
+</html>
